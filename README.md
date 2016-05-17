@@ -12,8 +12,8 @@
 
 ## Installation
 
-1. Build with maven.
-2. Deploy the war file to your web application server (only tested with jetty)
+1. Build with maven, or alternatively download from the CI server: http://cyberiantiger.org/jenkins/job/string-sets/
+2. Deploy the war file to your web application server (only tested with jetty), or alternatively use the existing deployed war at http://cyberiantiger.org/string-sets/
 
 ## Comments
 
