@@ -17,7 +17,13 @@
 
 ## Comments
 
-longest_chain is an NP-Complete problem, the longest chain in a single string set is the same as the longest path in a directed cyclic graph which is know to be an NP-complete problem. For the simple acyclic case it is trival to solve, however this is not guaranteed. Therefore it can't be solved in polynomial time (or if you can, you should probably be writing a thesis and claiming a few million dollars for proving that you can solve an NP-complete problem in P). That said it is possible to write an algorithm to do it, it's just a horrible problem to pose in a job application exercise.
+longest_chain is an NP-Complete problem (or NP-Hard, not sure), the longest chain in a single string set is the same as the longest path in a directed cyclic graph which is know to be an NP-complete problem.
+
+The implementation for longest_chain should run in O(N^2), however this assumes that the size of uploaded string sets is a constant. In terms of string set size (M) it scales very poorly, in the worst case O(M!) (for string sets such as "aaa, aba, aca, ada, aea, ....").
+
+In terms of memory usage, the algorithm is fairly compact, and just requires a directed graph be created for each string set, which is probably just O(NM) (a little trick used is that for each node in the graph with the same end letter, they all use the same object for the list of outgoing nodes).
+
+The graphs for each string set could be cached for further performance improvement (I haven't considered the time to construct the graph, I think compared to the time spent traversing it at scale it will be negligible anyway).
 
 Adding further generated documentation for the REST protocol would be fairly easy, however due to time constraints (I have other jobs to apply for), I have not done this. Swagger seems like a good technology to use for this, though there are many options. Refer to the javadocs in StringSetResource.java for complete API documentation.
 

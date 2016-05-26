@@ -229,4 +229,33 @@ public class StringSetResourceUnitTest {
         assertEquals(sampleList, new ArrayList<>(res.get(idF)));
         assertEquals(Arrays.asList(new String[] { "d", "c", "b", "a" }), new ArrayList<>(res.get(idG)));
     }
+
+    /**
+     * Test the longest_chain endpoint.
+     */
+    @Test
+    public void testLongestChain() {
+        StringSetResource res;
+        List<String> result;
+        res = createStringSetResource();
+        res.upload(Arrays.asList(new String[] {"foo",  "oomph",  "hgf"}));
+        res.upload(Arrays.asList(new String[] {"hij", "jkl", "jkm", "lmn"}));
+        res.upload(Arrays.asList(new String[] {"abc", "cde", "cdf", "fuf", "fgh"}));
+        result = res.longestChain();
+        assertEquals(7, result.size());
+        assertTrue(
+                Arrays.asList(new String[] { "abc", "cdf", "fuf", "fgh", "hij", "jkl", "lmn" }).equals(result) ||
+                Arrays.asList(new String[] { "abc", "cdf", "fuf", "fgh", "hgf", "foo", "oomph" }).equals(result)
+        );
+        res = createStringSetResource();
+        res.upload(Arrays.asList(new String[] { "aaa", "aba", "aca", "ada" }));
+        res.upload(Arrays.asList(new String[] { "aaa", "aba", "aca", "ada" }));
+        result = res.longestChain();
+        assertEquals(8, result.size());
+
+        res = createStringSetResource();
+        res.upload(Arrays.asList(new String[] { "a", "b", "c" }));
+        result = res.longestChain();
+        assertEquals(1, result.size());
+    }
 }

@@ -67,7 +67,9 @@ public class StringSetResourceIntegrationTest extends JerseyTest {
         int intersectionId = target(String.format("%d/%d/create_intersection", id, id)).request().get(Integer.class);
         assertEquals(sampleList, target(String.valueOf(intersectionId)).request().get(List.class));
         // delete
-        assertEquals(sampleList, target(String.format("%d/delete", id)).request().get(List.class));
+        assertEquals(sampleList, target(String.format("%d/delete", intersectionId)).request().get(List.class));
+        // longest_chain
+        assertEquals(1, target("longest_chain").request().get(List.class).size());
     }
     
 }

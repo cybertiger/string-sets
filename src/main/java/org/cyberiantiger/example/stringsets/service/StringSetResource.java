@@ -31,6 +31,7 @@ import javax.ws.rs.core.MediaType;
 import org.cyberiantiger.example.stringsets.model.Data;
 import org.cyberiantiger.example.stringsets.model.SetStatistics;
 import org.cyberiantiger.example.stringsets.model.StringSet;
+import org.cyberiantiger.example.stringsets.model.longestchain.LongestChainSolver;
 
 /**
  * JAX-RS endpoint for StringSet api.
@@ -192,5 +193,29 @@ public class StringSetResource {
         } catch (IllegalArgumentException ex) {
             throw new BadRequestException(ex.getMessage());
         }
+    }
+
+    /**
+     * Find the longest chain in all uploaded string sets.
+     * 
+     * From a list of strings sets find the longest chain of strings such that:
+     * <ul>
+     * <li>every next string starts with the same character as the previous one ends with
+     * <li>every next string belongs to the same set as previous one, except one jump to another set is allowed
+     * <li>specific string from specific set may be used only once
+     * </ul>
+     * <p>
+     * Example:
+     * Set 1: foo oomph hgf
+     * Set 2: hij jkl jkm lmn
+     * Set 3: abc cde cdf fuf fgh
+     * 
+     * The longest chain is: abc - cdf - fuf - fgh - (set changed here) - hij - jkl - lmn
+     * @return The longest chain in the uploaded data.
+     */
+    @GET
+    @Path("longest_chain")
+    public List<String> longestChain() {
+        return LongestChainSolver.solve(getData().getMap().values());
     }
 }
